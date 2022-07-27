@@ -1,0 +1,60 @@
+#grid {
+    width: 410px;
+    height: 410px;
+    display: grid;
+    grid-template-columns: repeat(4, auto);
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border: 5px solid black;
+}
+
+.cell {
+    width: 100px;
+    height: 100px;
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+    font-size: 60px;
+    font-family: 'Cormorant SC', serif;
+    user-select: none; 
+    -webkit-user-select: none;
+    -moz-user-select: none; 
+    -khtml-user-select: none;
+    -ms-user-select: none;
+}
+
+.cell:hover {
+    background-color: yellow;
+}
+
+.cell:nth-child(2),
+.cell:nth-child(6),
+.cell:nth-child(10),
+.cell:nth-child(14) {
+    border-right: 5px solid black;
+}
+
+.cell:nth-child(5),
+.cell:nth-child(6),
+.cell:nth-child(7),
+.cell:nth-child(8) {
+    border-bottom: 5px solid black;
+}
+
+.fixed {
+    color: black;
+    cursor: not-allowed;
+}
+
+.correct {
+    color: green;
+}
+
+.wrong {
+    color: red;
+}
