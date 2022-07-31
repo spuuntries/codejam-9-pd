@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css" />
+
+    <title>Document</title>
+</head>
+
+<body>
+    <main class="container">
+        <div>
+            <h1>
+                <h3><b>✍ DD Editor</b></h3> 
+                <b role="button" id="login" class="outline contrast" data-tooltip="Login">🔐</b>
+                <kbd><i id="username">Unknown User (0000-0000-0000-0000)</i></kbd><br />
+            </h1>
+        </div>
+        <article>
+            <header><b data-tooltip="Edit document name" role="button" id="v-button">✎</b> <b id="doc-name">Dolor sit
+                    amet</b>
+            </header>
+            <input style="display: none;" id="fail" type="text" placeholder="Something failed! Retrying..." aria-invalid="true" readonly>
+            <textarea style="resize: vertical; min-height: 10em;" type="text" id="doc-content" name="doc-content" placeholder="Write something here
+
+e.g. 
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"></textarea>
+            <footer>
+                <article>
+                    You have: <b id="doc-count">23</b> <b>documents</b> <br> <br>
+                    <button class="outline" id="v-button" data-tooltip="New document">🗎</button>
+                    <details role="list" data-tooltip="Open document">
+                        <summary aria-haspopup="listbox" role="button">📁</summary>
+                        <ul role="listbox">
+                            <li><a>Action</a></li>
+                            <li><a>Another action</a></li>
+                            <li><a>Something else here</a></li>
+                        </ul>
+                    </details>
+                    </div>
+                    <section></section>
+                </article>
+                    <b>Your score: </b>
+                    <i id="score">69</i> <br>
+                    <small>MIT licensed © 2022 Spuun, Debonair Demons</small>
+            </footer>
+        </article>
+    </main>
+    </footer>
+    <script>
+        var ws = new WebSocket("ws://" + location.host + "/ws")
+        ws.addEventListener("close", (reason) => {
+            if (reason.code == 1008) {
+                var ws = new WebSocket("ws://" + location.host + "/ws")
+                document.getElementById("fail").setAttribute("style", "display: block;")
+                setTimeout(() => {
+                    document.getElementById("fail").setAttribute("style", "display: none;")
+                }, 3000);
+            }
+        })
+    </script>
+</body>
+
+</html>

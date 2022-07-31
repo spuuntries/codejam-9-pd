@@ -8,22 +8,21 @@ from db import DatabaseHandler
 app = FastAPI()
 db = DatabaseHandler()
 
+
 @app.get("/")
 async def read_root():
     return {"Hello": "World"}
 
+
 @app.websocket("/ws")
-async def ws_end(ws: WebSocket, route: str):
+async def ws_end(ws: WebSocket):
     await ws.accept()
-    if not route:
-        await ws.close(code=status.WS_1002_PROTOCOL_ERROR)
-        return
     while True:
         json = await ws.receive_json()
-        if not json:
+        if not json or not json["route"]:
             await ws.close(code=status.WS_1008_POLICY_VIOLATION)
             return
-        match route:
+        match json["route"]:
             case "get_user_documents":
                 if not json["user_id"]:
                     await ws.close(code=status.WS_1008_POLICY_VIOLATION)
@@ -137,7 +136,9 @@ async def ws_end(ws: WebSocket, route: str):
                     return
                 try:
                     await db.write_document(json["doc_id"], json["char"])
-                    anum = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+                    anum = (
+                        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+                    )
                     current_char_count = await db.get_char_count(json["user_id"])
                     index = anum.index(json["char"])
                     current_char_count = current_char_count[index] - 1
